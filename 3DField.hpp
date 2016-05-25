@@ -26,6 +26,11 @@ Grid3D(int m, int n, int l)
 	}
 }
 
+//Grid3D()
+//	:_nx(0),_ny(0),_nz(0)
+//{
+//}
+
 
 Grid3D(const Grid3D & x)
 	:_nx(x._nx),_ny(x._ny),_nz(x._nz)
@@ -155,8 +160,15 @@ T ***    _field;
 template <class T>
 class Field3D
 {
+public:
+Field3D(const Grid3D<T> & l_gried)
+	: _grid(2,3,4)
+{
+}
+
 private:
 Grid3D<T>	_grid;
+double      _cell[3];
 };
 
 

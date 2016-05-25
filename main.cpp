@@ -17,7 +17,7 @@ int main()
 			}
 		}
 	}
-	std::cout << field;
+//	std::cout << field;
 
 
 //	std::cout << field[1][1][1];
@@ -34,7 +34,7 @@ int main()
 		}
 	}
 	std::cout << "KK\n";
-	std::cout << field2;
+//	std::cout << field2;
 
 
 //	Field3D<double> field3(field);
@@ -42,13 +42,15 @@ int main()
 	Grid3D<double> x1=(field+field2);
 
 	std::cout << "KK\n";
-	std::cout << x1;
+//	std::cout << x1;
 
 
 	Grid3D<double> x2=(field-field);
 
 	std::cout << "KK\n";
-	std::cout << x2;
+//	std::cout << x2;
+
+	Field3D<double> f(x2);
 
 
 	
