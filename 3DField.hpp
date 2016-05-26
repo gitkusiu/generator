@@ -4,9 +4,9 @@
 #include<iostream>
 #include<ostream>
 #include<cassert>
-using namespace std;
+#include<fstream>
 
-
+//using namespace std;
 
 template <class T>
 class Grid3D
@@ -130,7 +130,7 @@ void operator=(const Grid3D<T> & x)
 }
 
 
-friend ostream& operator<<(ostream& out, const Grid3D<T>& field) // output
+friend std::ostream& operator<<(std::ostream& out, const Grid3D<T>& field) // output
 {
 	for(int i = 0; i < field._nx; i++)
 	{
@@ -166,10 +166,37 @@ Field3D(const Grid3D<T> & l_gried)
 {
 }
 
+
+
 private:
 Grid3D<T>	_grid;
 double      _cell[3];
 };
+
+
+class OField3D_cube
+{
+public:
+OField3D_cube(std::string l_name)
+{
+	_f.open(l_name.c_str());
+}
+
+void write(const Field3D<double> & field)
+{
+	_f << "Tutaj będzie zapisany cube file ";
+}
+
+~OField3D_cube()
+{
+	_f.close();
+}
+
+private:
+std::ofstream _f;
+};
+
+
 
 
 

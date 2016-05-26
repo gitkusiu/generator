@@ -53,9 +53,4 @@ int main()
 	Field3D<double> f(x2);
 
 
-	
-//std::array<double, 2> a;
-//a.fill(2.3,5.6);
-//std::cout << a[2];
-//std::array<std::array<double, 2> 2> a = { {1.0,2.0}, {3.0,4.0} };
 }
