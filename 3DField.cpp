@@ -1,35 +1,37 @@
 #include "3DField.hpp"
 
 template <typename T> Grid3D<T>::Grid3D()
-    : _nx(0),_ny(0),_nz(0)
-{}
+    : _nx(1),_ny(1),_nz(1)
+{
+    _grid[0][0][0] = T();
+}
 
 template <typename T> Grid3D<T>::Grid3D(int m, int n, int l)
     : _nx(m), _ny(n), _nz(l)
 {
-    _field = new T**[_nx];
+    _grid = new T**[_nx];
     for(int i=0; i<_nx; i++)
     {
-        _field[i] = new T* [_ny];
+        _grid[i] = new T* [_ny];
         for(int j=0; j<_ny; j++)
         {
-            _field[i][j] = new T [_nz];
+            _grid[i][j] = new T [_nz];
         }
     }
 }
 
 template <typename T> Grid3D<T>::Grid3D(const Grid3D & x)   : _nx(x._nx),_ny(x._ny),_nz(x._nz)
 {
-    _field = new T**[_nx];
+    _grid = new T**[_nx];
     for(int i=0; i<_nx; i++)
     {
-        _field[i] = new T* [_ny];
+        _grid[i] = new T* [_ny];
         for(int j=0; j<_ny; j++)
         {
-            _field[i][j] = new T [_nz];
+            _grid[i][j] = new T [_nz];
             for(int k=0; k<_nz; k++)
             {
-                _field[i][j][k] = x._field[i][j][k];
+                _grid[i][j][k] = x._grid[i][j][k];
             }
         }
     }
@@ -41,16 +43,16 @@ template <typename T> Grid3D<T>::~Grid3D()
     {
         for(int j=_ny-1; j>= 0; j--)
         {
-            delete[] _field[i][j]; 
+            delete[] _grid[i][j]; 
         } 
-        delete [] _field[i];
+        delete [] _grid[i];
     }
-    delete [] _field;
+    delete [] _grid;
 }
 
 template <typename T> T** const Grid3D<T>::operator[](int i)
 {
-    return _field[i];
+    return _grid[i];
 }
 
 template <typename T> Grid3D<T> Grid3D<T>::operator+(const Grid3D<T> & x) const
@@ -64,7 +66,7 @@ template <typename T> Grid3D<T> Grid3D<T>::operator+(const Grid3D<T> & x) const
         {
             for(int k=_nz-1; k>= 0; k--)
             {
-                tmp[i][j][k] += _field[i][j][k];
+                tmp[i][j][k] += _grid[i][j][k];
             }
         }
     }
@@ -82,7 +84,7 @@ template <typename T> Grid3D<T> Grid3D<T>::operator-(const Grid3D<T> & x) const
         {
             for(int k=_nz-1; k>= 0; k--)
             {
-                tmp[i][j][k] -= _field[i][j][k];
+                tmp[i][j][k] -= _grid[i][j][k];
             }
         }
     }
@@ -98,7 +100,7 @@ template <typename T> void Grid3D<T>::operator=(const Grid3D<T> & x)
         {
             for(int k=_nz-1; j>= 0; j--)
             {
-                _field[i][j][k] = x._field[i][j][k];
+                _grid[i][j][k] = x._grid[i][j][k];
             }
         }
     }
@@ -109,7 +111,18 @@ template class Grid3D<double>;
 
 
 
-template <typename T> Field3D<T>::Field3D(const Grid3D<T> & l_gried) : _grid(2,3,4) {}
+template <typename T> Field3D<T>::Field3D(const Grid3D<T> & l_gried, double l_cell[3][3])
+	: _grid(l_gried)
+{
+    for(int i=1; i<3; i++)
+    {
+        for(int j=1; j<3; j++)
+        {
+           _cell[i][j] = l_cell[i][j];
+        }
+    }
+}
+
 
 template class Field3D<double>;
 

@@ -40,7 +40,7 @@ public:
                 out <<  "| " ;
                 for(int k = 0; k < field._nz; k++)
                 {
-                    out << field._field[i][j][k] << " " ;
+                    out << field._grid[i][j][k] << " " ;
                 }
                 out <<  "|\n" ;
             }
@@ -52,7 +52,7 @@ public:
 
 private:
     int     _nx,_ny,_nz;
-    T ***   _field;
+    T ***   _grid;
 };
 
 
@@ -60,11 +60,11 @@ template <class T>
 class Field3D
 {
 public:
-    Field3D(const Grid3D<T> & l_gried);
+    Field3D(const Grid3D<T> & l_gried, double l_cell[3][3]);
     
 private:
     Grid3D<T>   _grid;
-    double      _cell[3];
+    double **   _cell;
 };
 
 
