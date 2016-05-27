@@ -1,5 +1,9 @@
 #include "3DField.hpp"
 
+
+
+
+
 template <typename T> Grid3D<T>::Grid3D()
     : _nx(1),_ny(1),_nz(1)
 {
@@ -110,19 +114,66 @@ template class Grid3D<double>;
 
 
 
-
-template <typename T> Field3D<T>::Field3D(const Grid3D<T> & l_gried, double l_cell[3][3])
-	: _grid(l_gried)
+template <typename T> Field3D<T>::Field3D()
+	: _grid()
 {
     for(int i=1; i<3; i++)
     {
         for(int j=1; j<3; j++)
+        {
+           _cell[i][j] = 0.0;
+        }
+    }
+}
+
+
+template <typename T> Field3D<T>::Field3D(const Grid3D<T> & l_gried, double l_cell[3][3])
+	: _grid(l_gried)
+{
+    const int dim = 3;
+    _cell = new double* [dim];
+    for(int i=1; i<dim; i++)
+    {
+        _cell[i] = new double [dim];
+        for(int j=1; j<dim; j++)
         {
            _cell[i][j] = l_cell[i][j];
         }
     }
 }
 
+
+template <typename T> Field3D<T>::~Field3D()
+{
+    const int dim = 3;
+    for(int i=1; i<dim; i++)
+    {
+        delete _cell[i];
+    }
+    delete _cell;
+}
+
+template <typename T> bool Field3D<T>::isPeriodic()
+{
+    bool is = false;
+    for(int i=1; i<dim; i++)
+    {
+        for(int j=1; j<dim; j++)
+        {
+            if(_cell[i][j] != 0.0)
+            {
+                is = true;
+                break;
+            }    
+        }
+    }
+    return is;
+}
+
+template <typename T> double const ** Field3D<T>::cell() const
+{
+    
+}
 
 template class Field3D<double>;
 

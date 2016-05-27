@@ -5,7 +5,7 @@ int main()
     int n,m,k;
     m=n=k=400;
     Grid3D<double> field(m,n,k);
-
+    OField3D_cube out("dddd");
 //	for(int i=0; i<m; i++)
 //	{
 //		for(int j=0; j<n; j++)
