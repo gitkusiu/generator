@@ -105,7 +105,10 @@ Field3DStreamer_cube(Field3D<double> & f) : Field3DStreamer(f) {}
 
     friend std::ostream & operator<<(std::ostream & o, Field3DStreamer_cube const & f)
     {
-        o << "Halo Halo";
+        o << "comment 1\n";
+        o << "comment 2\n";
+        o << "0 0.0 0.0 0.0\n";
+        o << f._field.nx() ;
         return o;
     }
 };
