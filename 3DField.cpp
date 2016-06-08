@@ -127,17 +127,19 @@ template <typename T> Field3D<T>::Field3D()
 }
 
 
-template <typename T> Field3D<T>::Field3D(const Grid3D<T> & l_gried, double l_cell[3][3])
+//template <typename T> Field3D<T>::Field3D(const Grid3D<T> & l_gried, double l_cell[3][3])
+//	: _grid(l_gried)
+template <typename T> Field3D<T>::Field3D(Grid3D<T> const & l_gried)
 	: _grid(l_gried)
 {
     const int dim = 3;
-    _cell = new double* [dim];
+//    _cell = new double* [dim];
     for(int i=1; i<dim; i++)
     {
-        _cell[i] = new double [dim];
+//        _cell[i] = new double [dim];
         for(int j=1; j<dim; j++)
         {
-           _cell[i][j] = l_cell[i][j];
+//           _cell[i][j] = l_cell[i][j];
         }
     }
 }
@@ -148,9 +150,9 @@ template <typename T> Field3D<T>::~Field3D()
     const int dim = 3;
     for(int i=1; i<dim; i++)
     {
-        delete _cell[i];
+//        delete _cell[i];
     }
-    delete _cell;
+//    delete _cell;
 }
 
 template <typename T> bool Field3D<T>::isPeriodic()

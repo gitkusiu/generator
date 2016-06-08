@@ -2,7 +2,7 @@
 #define Field3D_h 
 
 #include<iostream>
-#include<ostream>
+//#include<ostream>
 #include<cassert>
 #include<fstream>
 
@@ -63,7 +63,8 @@ class Field3D
 {
 public:
     Field3D();
-    Field3D(const Grid3D<T> & l_gried, double l_cell[3][3]);
+//    Field3D(const Grid3D<T> & l_gried, double l_cell[3][3]);
+    Field3D(Grid3D<T> const & l_gried);
     ~Field3D();
     bool isPeriodic();    // check if field is periodic
     double const ** cell() const ;
@@ -73,66 +74,31 @@ private:
 };
 
 
-class OField3D_cube
+
+class Field3DStreamer
 {
 public:
-    OField3D_cube(std::string l_name)
-    {
-    	_f.open(l_name.c_str());
-    }
-
-    friend void operator<<(OField3D_cube& out, const Field3D<double>& field)
-    {
-        _f << "Cell";
-//        for(int i=1; i<dim; i++)
-//       {
-//            for(int j=1; j<dim; j++)
-//            {
-//                _f <<  field[i][j];
-//            }
-//            _f << std::endl;
-//       }
-//                if(_cell[i][j] != 0.0)
-//                {
-//                    is = true;
-//                    break;
-//                }    
-//            }
-//        }
-//        return is;
-//        for(int i = 0; i < field._nx; i++)
-//        {
-//            out <<  "------------- \n" ;
-//            for(int j = 0; j < field._ny; j++)
-//            {
-//                out <<  "| " ;
-//                for(int k = 0; k < field._nz; k++)
-//                {
-//                    out << field._grid[i][j][k] << " " ;
-//                }
-//                out <<  "|\n" ;
-//            }
-//            out <<  "------------- "  << std::endl;
-//        }
-//        return _f;
-    }
-
-//void write(const Field3D<double> & field)
-//{
-//	_f << "Tutaj będzie zapisany cube file ";
-//}
-
-//~OField3D_cube()
-//{
-//	_f.close();
-//}
-
+Field3DStreamer(Field3D<double> & f) :_field(f) {}
 private:
-std::ofstream _f;
+Field3D<double> & _field;
 };
 
 
+class Field3DStreamer_cube : public Field3DStreamer
+{
+public:
+Field3DStreamer_cube(Field3D<double> & f) : Field3DStreamer(f) {}
 
-
+    friend std::ofstream & operator<<(std::ofstream & o, Field3DStreamer const & f)
+    {
+        o << "Halo Halo";
+        return o;
+    }
+    friend std::ostream & operator<<(std::ostream & o, Field3DStreamer const & f)
+    {
+        o << "Halo Halo";
+        return o;
+    }
+};
 
 #endif
