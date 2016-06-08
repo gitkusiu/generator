@@ -68,6 +68,9 @@ public:
     ~Field3D();
     bool isPeriodic();    // check if field is periodic
     double const ** cell() const ;
+    int nx() const { return _grid.nx();}
+    int ny() const { return _grid.ny();}
+    int nz() const { return _grid.nz();}
 private:
     Grid3D<T>   _grid;
     double **   _cell;
@@ -79,7 +82,9 @@ class Field3DStreamer
 {
 public:
 Field3DStreamer(Field3D<double> & f) :_field(f) {}
-private:
+
+protected:
+//private:
 Field3D<double> & _field;
 };
 
@@ -89,16 +94,30 @@ class Field3DStreamer_cube : public Field3DStreamer
 public:
 Field3DStreamer_cube(Field3D<double> & f) : Field3DStreamer(f) {}
 
-    friend std::ofstream & operator<<(std::ofstream & o, Field3DStreamer const & f)
+    friend std::ofstream & operator<<(std::ofstream & o, Field3DStreamer_cube const & f)
     {
-        o << "Halo Halo";
+        o << "comment 1";
+        o << "comment 2";
+        o << "0 0.0 0.0 0.0";
+        o << f._field.nx() ;
         return o;
     }
-    friend std::ostream & operator<<(std::ostream & o, Field3DStreamer const & f)
+
+    friend std::ostream & operator<<(std::ostream & o, Field3DStreamer_cube const & f)
     {
         o << "Halo Halo";
         return o;
     }
 };
+
+//std::ofstream & operator<<(std::ofstream & o, Field3D<double> & f)
+//    {
+//        o << "comment 1";
+//        o << "comment 2";
+//        o << "0 0.0 0.0 0.0";
+//        o << f.nx() ;
+//        return o;
+//    }
+
 
 #endif
